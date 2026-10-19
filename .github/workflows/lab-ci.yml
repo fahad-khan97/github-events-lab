@@ -1,0 +1,16 @@
+name: lab-ci
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show what changed
+        run: |
+          echo "sha=${GITHUB_SHA} ref=${GITHUB_REF}"
+          ls -R src
