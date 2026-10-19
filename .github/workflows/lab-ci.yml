@@ -9,8 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Show what changed
+      - name: Dump the event this run was triggered by
+        env:
+          EVENT_JSON: ${{ toJSON(github.event) }}
         run: |
-          echo "sha=${GITHUB_SHA} ref=${GITHUB_REF}"
-          ls -R src
+          echo "event_name=${{ github.event_name }} sha=${GITHUB_SHA} ref=${GITHUB_REF}"
+          echo "::group::github.event"
+          echo "$EVENT_JSON"
+          echo "::endgroup::"
